@@ -8,7 +8,11 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@customStyles/*": ["./src/assets/css/*"],
+      "@customTypes/*": ["./src/types/*"],
+      "@components/*": ["./src/components/*"],
+      "@views/*": ["./src/views/*"]
     }
   }
 }
