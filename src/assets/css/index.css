@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "BinggraeSamanco";
+    src: url("/src/assets/fonts/BinggraeSamanco.ttf");
+    font-weight: normal;
+}
+
+body {
+    font-family: "BinggraeSamanco";
+}

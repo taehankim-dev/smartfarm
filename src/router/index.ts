@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/smartfarm',
       name: 'map',
-      component: () => import('@views/KoreaMap.vue')
+      component: () => import('@views/maps/KoreaMap.vue')
     }
   ]
 })

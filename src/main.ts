@@ -1,4 +1,5 @@
 import '@customStyles/reset.css'
+import '@customStyles/index.css'
 // import "/"
 
 import { createApp } from 'vue'
