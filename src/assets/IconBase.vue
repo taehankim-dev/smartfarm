@@ -18,7 +18,7 @@ export default {
   props: {
     viewBox: {
       type: String,
-      default: '0 0 24 24'
+      default: '0 0 5000 5000'
     },
     iconName: {
       type: String,

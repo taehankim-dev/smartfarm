@@ -1,0 +1,284 @@
+.content-inner {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 80px);
+    /* overflow: hidden; */
+    /* display: grid; */
+    /* grid-template-columns: 2fr 1fr; */
+}
+
+.map-wrapper {
+    transition: all 0.3s;
+    width: 100%;
+    position: relative;
+}
+
+.map-wrapper >svg {
+    width: 100%;    
+}
+
+.province-point-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.marker-img {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    margin: 0 auto;
+}
+
+.point-inner >p {
+    font-size: 24px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color:rgb(255, 255, 255);
+    text-shadow: 1px 1px 6px rgb(0, 0, 0);
+}
+/* 
+@media screen and (min-width: 1200px) {
+    .marker-img {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+    }
+    .point-inner >p {
+        font-size:1.5rem;
+    }
+    .point-강원특별자치도 {
+        top: 110px;
+        left: 740px;
+    }
+
+    .point-서울특별시 {
+        top: 105px;
+        left: 540px;
+    }
+
+    .point-인천광역시 {
+        top: 125px;
+        left: 480px;
+    }
+
+    .point-경기도 {
+        top: 150px;
+        left: 610px;
+    }
+
+    .point-충청북도 {
+        top: 280px;
+        left: 650px;
+    }
+
+    .point-세종특별자치시 {
+        top: 310px;
+        left: 550px;
+    }
+
+    .point-대전광역시 {
+        top: 340px;
+        left: 590px;
+    }
+
+    .point-충청남도 {
+        top: 360px;
+        left: 520px;
+    }
+
+    .point-전라북도 {
+        top: 480px;
+        left: 580px;
+    }
+
+    .point-전라남도 {
+        top: 620px;
+        left: 580px;
+    }
+
+    .point-광주광역시 {
+        top: 555px;
+        left: 520px;
+    }
+
+    .point-경상북도 {
+        top: 340px;
+        left: 800px;
+    }
+
+    .point-경상남도 {
+        top: 540px;
+        left: 750px;
+    }
+
+    .point-부산광역시 {
+        top: 560px;
+        left: 850px;
+    }
+
+    .point-제주특별자치도 {
+        top: 900px;
+        left: 450px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .marker-img {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+    }
+    .point-강원특별자치도 {
+        top: 120px;
+        left: 800px;
+    }
+
+    .point-서울특별시 {
+        top: 320px;
+        left: 260px;
+    }
+
+    .point-인천광역시 {
+        top: 325px;
+        left: 220px;
+    }
+
+    .point-경기도 {
+        top: 360px;
+        left: 310px;
+    }
+
+    .point-충청북도 {
+        top: 420px;
+        left: 350px;
+    }
+
+    .point-세종특별자치시 {
+        top: 470px;
+        left: 270px;
+    }
+
+    .point-대전광역시 {
+        top: 500px;
+        left: 300px;
+    }
+
+    .point-충청남도 {
+        top: 480px;
+        left: 240px;
+    }
+
+    .point-전라북도 {
+        top: 580px;
+        left: 290px;
+    }
+
+    .point-전라남도 {
+        top: 690px;
+        left: 270px;
+    }
+
+    .point-광주광역시 {
+        top: 655px;
+        left: 248px;
+    }
+
+    .point-경상북도 {
+        top: 480px;
+        left: 440px;
+    }
+
+    .point-경상남도 {
+        top: 630px;
+        left: 400px;
+    }
+
+    .point-부산광역시 {
+        top: 650px;
+        left: 490px;
+    }
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .marker-img {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+    }
+    .point-강원특별자치도 {
+        top: 250px;
+        left: 400px;
+    }
+
+    .point-서울특별시 {
+        top: 320px;
+        left: 260px;
+    }
+
+    .point-인천광역시 {
+        top: 325px;
+        left: 220px;
+    }
+
+    .point-경기도 {
+        top: 360px;
+        left: 310px;
+    }
+
+    .point-충청북도 {
+        top: 420px;
+        left: 350px;
+    }
+
+    .point-세종특별자치시 {
+        top: 470px;
+        left: 270px;
+    }
+
+    .point-대전광역시 {
+        top: 500px;
+        left: 300px;
+    }
+
+    .point-충청남도 {
+        top: 480px;
+        left: 240px;
+    }
+
+    .point-전라북도 {
+        top: 580px;
+        left: 290px;
+    }
+
+    .point-전라남도 {
+        top: 690px;
+        left: 270px;
+    }
+
+    .point-광주광역시 {
+        top: 655px;
+        left: 248px;
+    }
+
+    .point-경상북도 {
+        top: 480px;
+        left: 440px;
+    }
+
+    .point-경상남도 {
+        top: 630px;
+        left: 400px;
+    }
+
+    .point-부산광역시 {
+        top: 650px;
+        left: 490px;
+    }
+} */
+

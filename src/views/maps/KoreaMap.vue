@@ -4,19 +4,19 @@
       <!-- <img src="/src/assets/KoreaMap.svg" alt="전국지도" /> -->
       <icon-base iconName="koreaMap" viewBox="400 -50 550 650" width="1920" height="1200">
         <!-- <icon-base iconName="koreaMap" viewBox="350 0 600 800" width="1920" height="1200"> -->
-        <KoreaMap />
+        <KoreaMap :groupedByProvince="groupedByProvince" />
       </icon-base>
-    </div>
 
-    <div
-      v-for="(count, province) in groupedByProvince"
-      :key="province"
-      :class="'province-point-wrapper point-' + province"
-    >
-      <div class="point-inner">
-        <img src="/src/assets/icons/marker.png" alt="표시 마크" class="marker-img" />
-        <p>{{ province }}</p>
-      </div>
+      <!-- <div
+        v-for="(count, province) in groupedByProvince"
+        :key="province"
+        :class="'province-point-wrapper point-' + province"
+      >
+        <div class="point-inner">
+          <p>{{ province }}</p>
+          <img src="/src/assets/icons/marker.png" alt="표시 마크" class="marker-img" />
+        </div>
+      </div> -->
     </div>
 
     <RegionInfo />
@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import '@customStyles/KoreaMap.css'
 import { CapacitorHttp } from '@capacitor/core'
 import { onBeforeMount } from 'vue'
 import { ref } from 'vue'
@@ -38,7 +39,7 @@ const provinceDetail = ref({})
 
 onBeforeMount(() => {
   //   resizingPage()
-  getFarmList()
+  //   getFarmList()
 })
 
 const resizingPage = () => {
@@ -105,97 +106,8 @@ const organizeDataByLocation = (data: farmIdentityT[]) => {
 
   groupedByProvince.value = provinceCount
   provinceDetail.value = groupedLoc
+
+  console.log(provinceDetail.value, 'HH')
+  console.log(groupedByProvince.value, 'HH2')
 }
 </script>
-<style>
-.content-inner {
-  display: flex;
-  width: 100%;
-  height: calc(100vh - 80px);
-  overflow: hidden;
-  /* display: grid; */
-  /* grid-template-columns: 2fr 1fr; */
-}
-
-.map-wrapper {
-  transition: all 0.3s;
-  width: 100%;
-}
-
-.map-wrapper svg {
-  width: 100%;
-}
-
-.province-point-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.marker-img {
-  display: flex;
-  width: 30px;
-  height: 30px;
-  margin: 0 auto;
-}
-
-.point-강원특별자치도 {
-  top: 300px;
-  left: 400px;
-}
-
-.point-서울특별시 {
-  top: 320px;
-  left: 260px;
-}
-
-.point-경기도 {
-  top: 360px;
-  left: 310px;
-}
-
-.point-충청북도 {
-  top: 420px;
-  left: 350px;
-}
-
-.point-세종특별자치시 {
-  top: 465px;
-  left: 280px;
-}
-
-.point-충청남도 {
-  top: 480px;
-  left: 240px;
-}
-
-.point-전라북도 {
-  top: 580px;
-  left: 290px;
-}
-
-.point-전라남도 {
-  top: 690px;
-  left: 270px;
-}
-
-.point-광주광역시 {
-  top: 645px;
-  left: 248px;
-}
-
-.point-경상북도 {
-  top: 480px;
-  left: 440px;
-}
-
-.point-경상남도 {
-  top: 630px;
-  left: 400px;
-}
-
-.point-부산광역시 {
-  top: 650px;
-  left: 490px;
-}
-</style>
