@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const regionTitle = ref('경상북도')
+const regionTitle = ref('')
 // const regionList = ref()
 </script>
 

@@ -5,21 +5,28 @@ import cors from 'cors';
 const allowedOrigins = ['http://localhost:5173']
 
 const productNames = {
-    "090300": "가지",
-    "26E800": "국화",
-    "230000": "다육이",
-    "080400": "딸기",
-    "080600": "방울토마토",
+    "060300": "포도",
+    "061400": "감귤",
     "065900": "블루베리",
-    "100500": "상추",
-    "100800": "시금치",
-    "090100": "오이",
     "080200": "참외",
     "080300": "토마토",
-    "132600": "파프리카",
-    "060300": "포도",
+    "080400": "딸기",
+    "080500": "멜론",
+    "080600": "방울토마토",
+    "090100": "오이",
+    "090200": "호박",
+    "090300": "가지",
+    "100500": "상추",
+    "100800": "시금치",
     "120500": "풋고추",
-    "090200": "호박"
+    "132600": "파프리카",
+    "150400": "기타",
+    "170000": "버섯",
+    "230000": "다육이",
+    "237900": "선인장",
+    "26E800": "국화",
+    "ETC102": "기타",
+    "ETC105": "기타",
 }
 
 const app = express();
@@ -40,6 +47,7 @@ app.get("/getIdentityDataList/:key", async (req, res) => {
         const data = response.data;
 
         const returnData = data.map(item => {
+            // console.log(productNames[item.itemCode], item.itemCode)
             return {
                 userId: item.userId,
                 facilityId: item.facilityId,

@@ -4,19 +4,8 @@
       <!-- <img src="/src/assets/KoreaMap.svg" alt="전국지도" /> -->
       <icon-base iconName="koreaMap" viewBox="400 -50 550 650" width="1920" height="1200">
         <!-- <icon-base iconName="koreaMap" viewBox="350 0 600 800" width="1920" height="1200"> -->
-        <KoreaMap :groupedByProvince="groupedByProvince" />
+        <KoreaMap :groupedByProvince="groupedByProvinceAndPlant" />
       </icon-base>
-
-      <!-- <div
-        v-for="(count, province) in groupedByProvince"
-        :key="province"
-        :class="'province-point-wrapper point-' + province"
-      >
-        <div class="point-inner">
-          <p>{{ province }}</p>
-          <img src="/src/assets/icons/marker.png" alt="표시 마크" class="marker-img" />
-        </div>
-      </div> -->
     </div>
 
     <RegionInfo />
@@ -28,34 +17,33 @@ import '@customStyles/KoreaMap.css'
 import { CapacitorHttp } from '@capacitor/core'
 import { onBeforeMount } from 'vue'
 import { ref } from 'vue'
-import throttle from 'lodash/throttle'
 import KoreaMap from '@/assets/KoreaMap.vue'
 import RegionInfo from './RegionInfo.vue'
 import type { farmIdentityT } from '@customTypes/identityType.ts'
 
 const farmList = ref([])
 const groupedByProvince = ref({})
-const provinceDetail = ref({})
+const groupedByProvinceAndPlant = ref({})
+
+type FarmDataT = {
+  addressName: string
+  facilityId: string
+  product: string
+  userId: string
+}
+
+type AddressEntryT = {
+  addressName: string
+  [product: string]: number | string
+}
+
+type ResultT = {
+  [region: string]: AddressEntryT[]
+}
 
 onBeforeMount(() => {
-  //   resizingPage()
-  //   getFarmList()
+  getFarmList()
 })
-
-const resizingPage = () => {
-  const resizeHandler = throttle(function () {
-    let svg = document.getElementById('koreaMap')
-    const pageWidth = window.outerWidth
-
-    if (pageWidth < 720) {
-      svg?.setAttribute('viewBox', '400 -50 1200 520')
-    } else {
-      svg?.setAttribute('viewBox', '400 -50 1200 520')
-    }
-  }, 1000)
-
-  window.addEventListener('resize', resizeHandler)
-}
 
 // 농가 전체 정보 가져오기.
 const getFarmList = async () => {
@@ -68,46 +56,63 @@ const getFarmList = async () => {
   }).then((res) => {
     if (res.status === 200) {
       farmList.value = res.data
+      //   console.log(farmList.value, '<= farmList')
       organizeDataByLocation(res.data)
     }
   })
 }
 
 // 지역별로 정리하기
-const organizeDataByLocation = (data: farmIdentityT[]) => {
-  const locations = Array.from(new Set([...data.map((item) => item.addressName)]))
-
-  const groupedLoc: { [key: string]: { [key: string]: number } } = {}
-  const provinceCount: { [key: string]: number } = {}
-
-  locations.map((loc) => {
-    let address: string[] = loc.split(' ')
-    let province: string = ''
-    let city: string = ''
-    if (address.length > 1) {
-      province = address[0]
-      city = address[1]
+const organizeDataByLocation = (farms: farmIdentityT[]) => {
+  const group: { [key: string]: FarmDataT[] } = {}
+  farms.map((farm) => {
+    const loc: string[] = farm.addressName.split(' ')
+    if (!group[loc[0]]) {
+      group[loc[0]] = [
+        {
+          addressName: farm.addressName,
+          facilityId: farm.facilityId,
+          product: farm.product,
+          userId: farm.userId
+        }
+      ]
     } else {
-      province = address[0]
+      group[loc[0]].push(farm)
     }
 
-    if (!groupedLoc[province]) {
-      groupedLoc[province] = {}
-      provinceCount[province] = 0
-    }
-
-    if (!groupedLoc[province][city]) {
-      groupedLoc[province][city] = 0
-    }
-
-    provinceCount[province]++
-    groupedLoc[province][city]++
+    return
   })
 
-  groupedByProvince.value = provinceCount
-  provinceDetail.value = groupedLoc
+  organizeDataByPlant(group)
+  groupedByProvince.value = group
+}
 
-  console.log(provinceDetail.value, 'HH')
-  console.log(groupedByProvince.value, 'HH2')
+const organizeDataByPlant = (group: { [key: string]: FarmDataT[] }) => {
+  const groupByPlant: ResultT = {}
+  for (const region in group) {
+    if (!groupByPlant[region]) {
+      groupByPlant[region] = []
+    }
+
+    group[region].map((item) => {
+      const { addressName, product } = item
+
+      let addressEntry = groupByPlant[region].find((entry) => entry.addressName === addressName)
+      if (!addressEntry) {
+        // 해당 주소가 없으면 새 객체를 생성하여 추가합니다.
+        addressEntry = { addressName }
+        groupByPlant[region].push(addressEntry)
+      }
+
+      // 제품 카운트를 업데이트합니다.
+      if (!addressEntry[product]) {
+        addressEntry[product] = 1
+      } else {
+        ;(addressEntry[product] as number)++
+      }
+    })
+  }
+
+  groupedByProvinceAndPlant.value = groupByPlant
 }
 </script>
